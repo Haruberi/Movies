@@ -28,7 +28,7 @@ namespace MovieAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var url = "https://ghibliapi.herokuapp.com/films/58611129-2dbc-4a81-a72f-77ddfc1b1b49";
+            var url = "https://ghibliapi.herokuapp.com/films";
 
             string serializedResponse;
             using (var client = new HttpClient())
