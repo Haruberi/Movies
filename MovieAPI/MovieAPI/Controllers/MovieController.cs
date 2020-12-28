@@ -23,10 +23,6 @@ namespace MovieAPI.Controllers
             _logger = logger;
             _memoryCache = memoryCache;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
 
         //få upp alla filmer
         [HttpGet]
