@@ -24,7 +24,8 @@ namespace MovieAPI.Controllers
             _memoryCache = memoryCache;
         }
 
-        //få upp alla filmer
+        //få upp filmen "Howl's moving castle"
+        //routing
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -42,6 +43,29 @@ namespace MovieAPI.Controllers
             }
 
             return Ok(serializedResponse);
+        }
+
+        //få Title för film
+        [HttpGet("{id}/{title}")]
+        public async Task<IActionResult> Get(string id, string title)
+        {
+            var urlTitle = $"https://ghibliapi.herokuapp.com/films/id={id}/title={title}";
+            string responseOutput;
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    var response = await client.GetAsync(urlTitle);
+                    responseOutput = await response.Content.ReadAsStringAsync();
+                    var desResponse = JsonConvert.DeserializeObject<dynamic>(responseOutput);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+
+            return Ok(responseOutput);
         }
     }
 }
