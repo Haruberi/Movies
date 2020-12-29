@@ -7,5 +7,8 @@ namespace MovieAPI.Models
 {
     public class MovieModel
     {
+        public string Id { get; set; }
+        public string MovieTitle { get; set; }
+        public int ReleaseYear { get; set; }
     }
 }

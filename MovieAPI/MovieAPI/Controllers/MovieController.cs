@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
+using MovieAPI.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -24,8 +25,7 @@ namespace MovieAPI.Controllers
             _memoryCache = memoryCache;
         }
 
-        //få upp filmen "Howl's moving castle"
-        //routing
+        //return all films
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -45,17 +45,17 @@ namespace MovieAPI.Controllers
             return Ok(serializedResponse);
         }
 
-        //få Title för film
-        [HttpGet("{id}/{title}")]
-        public async Task<IActionResult> Get(string id, string title)
+        //Returns a film on id
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(string id)
         {
-            var urlTitle = $"https://ghibliapi.herokuapp.com/films/id={id}/title={title}";
+            var urlId = $"https://ghibliapi.herokuapp.com/films/{id}";
             string responseOutput;
             try
             {
                 using (var client = new HttpClient())
                 {
-                    var response = await client.GetAsync(urlTitle);
+                    var response = await client.GetAsync(urlId);
                     responseOutput = await response.Content.ReadAsStringAsync();
                     var desResponse = JsonConvert.DeserializeObject<dynamic>(responseOutput);
                 }
@@ -66,6 +66,20 @@ namespace MovieAPI.Controllers
             }
 
             return Ok(responseOutput);
+        }
+
+        //Add movies
+        [HttpPost]
+        public IActionResult AddMovies([FromBody] MovieModel payload)
+        {
+            return Ok(JsonConvert.SerializeObject(payload));
+        }
+
+        //Remove Movies
+        [HttpDelete]
+        public IActionResult DeleteMovies([FromBody] MovieModel payload)
+        {
+            return Ok(JsonConvert.SerializeObject(payload));
         }
     }
 }
