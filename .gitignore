@@ -348,3 +348,13 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+MovieConsole/MovieConsole.sln
+
+MovieConsole/MovieConsole/App.config
+
+MovieConsole/MovieConsole/MovieConsole.csproj
+
+MovieConsole/MovieConsole/Program.cs
+
+MovieConsole/MovieConsole/Properties/AssemblyInfo.cs
