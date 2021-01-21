@@ -68,31 +68,33 @@ namespace MovieAPI.Controllers
 
             return Ok(new { Data = responseOutput, StatusCode = HttpStatusCode.OK });
         }
-
-        //Add movies
-        [HttpPost]
-        public IActionResult AddMovies([FromBody] MovieModel payload)
-        {
-            var responseModel = new { Data = payload, StatusCode = Ht };
-            return Ok(JsonConvert.SerializeObject(payload));
-        }
-
-        //Remove Movies
-        [HttpDelete]
-        public IActionResult DeleteMovies([FromBody] MovieModel payload)
-        {
-            bool success = DeleteMovies(payload);
-            return Ok(JsonConvert.SerializeObject(payload));
-        }
-
-        public bool DeleteMovie(MovieModel model)
-        {
-            if(MovieList.Any(model.Id))
-            {
-                MovieList.Remove(x => x.Id == model.Id);
-                return true;
-            }
-            return false;
-        }
     }
 }
+
+        //Ta bort post och delete, används inte här, bara på Movie_Console
+        //Add movies
+
+        //[HttpPost]
+        //public IActionResult AddMovies([FromBody] MovieModel payload)
+        //{
+          //  var responseModel = new { Data = payload, StatusCode = Ht };
+            //return Ok(JsonConvert.SerializeObject(payload));
+        //}
+
+        //Remove Movies
+        //[HttpDelete]
+        //public IActionResult DeleteMovies([FromBody] MovieModel payload)
+        //{
+          //  bool success = DeleteMovies(payload);
+        //    //return Ok(JsonConvert.SerializeObject(payload));
+        //}
+
+        //public bool DeleteMovie(MovieModel model)
+        //{
+          //  if(MovieList.Any(model.Id))
+            //{
+               // MovieList.Remove(x => x.Id == model.Id);
+              //  return true;
+            //}
+            //return false;
+
