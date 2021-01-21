@@ -10,5 +10,6 @@ namespace MovieAPI.Models
         public string Id { get; set; }
         public string MovieTitle { get; set; }
         public int ReleaseYear { get; set; }
+        public string Description { get; set; }
     }
 }
