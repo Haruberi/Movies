@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -65,13 +66,14 @@ namespace MovieAPI.Controllers
                 return BadRequest(ex);
             }
 
-            return Ok(responseOutput);
+            return Ok(new { Data = responseOutput, StatusCode = HttpStatusCode.OK });
         }
 
         //Add movies
         [HttpPost]
         public IActionResult AddMovies([FromBody] MovieModel payload)
         {
+            var responseModel = new { Data = payload, StatusCode = Ht };
             return Ok(JsonConvert.SerializeObject(payload));
         }
 
@@ -79,7 +81,18 @@ namespace MovieAPI.Controllers
         [HttpDelete]
         public IActionResult DeleteMovies([FromBody] MovieModel payload)
         {
+            bool success = DeleteMovies(payload);
             return Ok(JsonConvert.SerializeObject(payload));
+        }
+
+        public bool DeleteMovie(MovieModel model)
+        {
+            if(MovieList.Any(model.Id))
+            {
+                MovieList.Remove(x => x.Id == model.Id);
+                return true;
+            }
+            return false;
         }
     }
 }
