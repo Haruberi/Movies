@@ -43,6 +43,8 @@ namespace MovieAPI.Controllers
                     //serializedResponse = JsonConvert.SerializeObject(stringResp);
                 }
             }
+            //lägg in det här på consolen med, fast kopplat till Movie classen
+            //movie classen måste ha samma namn på properties som response har
             var deserializedResponse = JsonConvert.DeserializeObject<List<Response>>(stringResp,
             new JsonSerializerSettings
             {
