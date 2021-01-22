@@ -32,18 +32,24 @@ namespace MovieAPI.Controllers
         {
             var url = "https://ghibliapi.herokuapp.com/films";
 
-            string serializedResponse;
+            //string serializedResponse;
+            var stringResp = string.Empty;
             using (var client = new HttpClient())
             {
                 using (var response = await client.GetAsync(url))
                 {
                     var responseCont = response.Content;
-                    var stringResp = await responseCont.ReadAsStringAsync();
-                    serializedResponse = JsonConvert.SerializeObject(stringResp);
+                    stringResp = await responseCont.ReadAsStringAsync();
+                    //serializedResponse = JsonConvert.SerializeObject(stringResp);
                 }
             }
+            var deserializedResponse = JsonConvert.DeserializeObject<List<Response>>(stringResp,
+            new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
 
-            return Ok(serializedResponse);
+            return Ok(deserializedResponse);
         }
 
         //Returns a film on id
@@ -71,30 +77,30 @@ namespace MovieAPI.Controllers
     }
 }
 
-        //Ta bort post och delete, används inte här, bara på Movie_Console
-        //Add movies
+//Ta bort post och delete, används inte här, bara på Movie_Console
+//Add movies
 
-        //[HttpPost]
-        //public IActionResult AddMovies([FromBody] MovieModel payload)
-        //{
-          //  var responseModel = new { Data = payload, StatusCode = Ht };
-            //return Ok(JsonConvert.SerializeObject(payload));
-        //}
+//[HttpPost]
+//public IActionResult AddMovies([FromBody] MovieModel payload)
+//{
+//  var responseModel = new { Data = payload, StatusCode = Ht };
+//return Ok(JsonConvert.SerializeObject(payload));
+//}
 
-        //Remove Movies
-        //[HttpDelete]
-        //public IActionResult DeleteMovies([FromBody] MovieModel payload)
-        //{
-          //  bool success = DeleteMovies(payload);
-        //    //return Ok(JsonConvert.SerializeObject(payload));
-        //}
+//Remove Movies
+//[HttpDelete]
+//public IActionResult DeleteMovies([FromBody] MovieModel payload)
+//{
+//  bool success = DeleteMovies(payload);
+//    //return Ok(JsonConvert.SerializeObject(payload));
+//}
 
-        //public bool DeleteMovie(MovieModel model)
-        //{
-          //  if(MovieList.Any(model.Id))
-            //{
-               // MovieList.Remove(x => x.Id == model.Id);
-              //  return true;
-            //}
-            //return false;
+//public bool DeleteMovie(MovieModel model)
+//{
+//  if(MovieList.Any(model.Id))
+//{
+// MovieList.Remove(x => x.Id == model.Id);
+//  return true;
+//}
+//return false;
 
