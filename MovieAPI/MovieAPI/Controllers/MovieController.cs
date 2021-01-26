@@ -32,15 +32,14 @@ namespace MovieAPI.Controllers
         {
             var url = "https://ghibliapi.herokuapp.com/films";
 
-            //string serializedResponse;
             var stringResp = string.Empty;
+            
             using (var client = new HttpClient())
             {
                 using (var response = await client.GetAsync(url))
                 {
                     var responseCont = response.Content;
                     stringResp = await responseCont.ReadAsStringAsync();
-                    //serializedResponse = JsonConvert.SerializeObject(stringResp);
                 }
             }
             //lägg in det här på consolen med, fast kopplat till Movie classen
