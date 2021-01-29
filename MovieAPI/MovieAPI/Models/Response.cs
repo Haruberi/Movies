@@ -30,17 +30,6 @@ namespace MovieAPI.Models
         [JsonProperty("rt_score")]
         public string RtScore { get; set; }
 
-        //[JsonProperty("people")]
-        //public string People { get; set; }
-
-        //[JsonProperty("species")]
-        //public string Species { get; set; }
-
-        //[JsonProperty("locations")]
-        //public string Locations { get; set; }
-
-        //[JsonProperty("url")]
-        //public string Url { get; set; }
 
     }
 }
