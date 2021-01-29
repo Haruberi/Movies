@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace MovieAPI.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class MovieController : Controller
     {
         //cache
@@ -58,14 +58,18 @@ namespace MovieAPI.Controllers
         public async Task<IActionResult> Get(string id)
         {
             var urlId = $"https://ghibliapi.herokuapp.com/films/{id}";
-            string responseOutput;
+            Response responseOutput;
             try
             {
                 using (var client = new HttpClient())
                 {
                     var response = await client.GetAsync(urlId);
-                    responseOutput = await response.Content.ReadAsStringAsync();
-                    var desResponse = JsonConvert.DeserializeObject<dynamic>(responseOutput);
+                    var stringResponse = await response.Content.ReadAsStringAsync();
+                    responseOutput = JsonConvert.DeserializeObject<Response>(stringResponse, 
+                        new JsonSerializerSettings 
+                        {
+                            NullValueHandling = NullValueHandling.Ignore
+                        });
                 }
             }
             catch (Exception ex)
@@ -76,32 +80,10 @@ namespace MovieAPI.Controllers
             return Ok(new { Data = responseOutput, StatusCode = HttpStatusCode.OK });
         }
     }
+
+    //class ResponseModel
+    //{
+    //    public Movie Data { get; set; }
+    //    public HttpStatusCode StatusCode { get; set; }
+    //}
 }
-
-//Ta bort post och delete, används inte här, bara på Movie_Console
-//Add movies
-
-//[HttpPost]
-//public IActionResult AddMovies([FromBody] MovieModel payload)
-//{
-//  var responseModel = new { Data = payload, StatusCode = Ht };
-//return Ok(JsonConvert.SerializeObject(payload));
-//}
-
-//Remove Movies
-//[HttpDelete]
-//public IActionResult DeleteMovies([FromBody] MovieModel payload)
-//{
-//  bool success = DeleteMovies(payload);
-//    //return Ok(JsonConvert.SerializeObject(payload));
-//}
-
-//public bool DeleteMovie(MovieModel model)
-//{
-//  if(MovieList.Any(model.Id))
-//{
-// MovieList.Remove(x => x.Id == model.Id);
-//  return true;
-//}
-//return false;
-
