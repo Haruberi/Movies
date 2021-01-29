@@ -26,6 +26,10 @@ namespace MovieAPI.Controllers
             _logger = logger;
             _memoryCache = memoryCache;
         }
+        public void OnGet()
+        {
+            _logger.LogInformation("GET Pages.MovieController called.");
+        }
 
         [HttpGet]
         public async Task<IActionResult> Get()
@@ -59,9 +63,7 @@ namespace MovieAPI.Controllers
             var cacheKey = $"Get_On_Location-{id}";
 
             if (_memoryCache.TryGetValue(cacheKey, out string cachedValue))
-            {
                 return Ok(cachedValue);
-            }
             try
             {
                 using (var client = new HttpClient())
