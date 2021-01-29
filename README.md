@@ -11,3 +11,6 @@ What does this application do:
 Including cache:
 - Memory cache
 
+How to use:
+- Start project
+
