@@ -17,6 +17,7 @@ namespace MovieAPI.Controllers
     public class MovieController : Controller
     {
         //cache
+        //FIXA CACHE
         private readonly IMemoryCache _memoryCache;
         private readonly ILogger<MovieController> _logger;
 
@@ -26,14 +27,13 @@ namespace MovieAPI.Controllers
             _memoryCache = memoryCache;
         }
 
-        //return all films
         [HttpGet]
         public async Task<IActionResult> Get()
         {
             var url = "https://ghibliapi.herokuapp.com/films";
 
             var stringResp = string.Empty;
-            
+
             using (var client = new HttpClient())
             {
                 using (var response = await client.GetAsync(url))
@@ -42,8 +42,6 @@ namespace MovieAPI.Controllers
                     stringResp = await responseCont.ReadAsStringAsync();
                 }
             }
-            //lägg in det här på consolen med, fast kopplat till Movie classen
-            //movie classen måste ha samma namn på properties som response har
             var deserializedResponse = JsonConvert.DeserializeObject<List<Response>>(stringResp,
             new JsonSerializerSettings
             {
@@ -53,7 +51,6 @@ namespace MovieAPI.Controllers
             return Ok(deserializedResponse);
         }
 
-        //Returns a film on id
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(string id)
         {
@@ -65,8 +62,8 @@ namespace MovieAPI.Controllers
                 {
                     var response = await client.GetAsync(urlId);
                     var stringResponse = await response.Content.ReadAsStringAsync();
-                    responseOutput = JsonConvert.DeserializeObject<Response>(stringResponse, 
-                        new JsonSerializerSettings 
+                    responseOutput = JsonConvert.DeserializeObject<Response>(stringResponse,
+                        new JsonSerializerSettings
                         {
                             NullValueHandling = NullValueHandling.Ignore
                         });
@@ -80,10 +77,4 @@ namespace MovieAPI.Controllers
             return Ok(new { Data = responseOutput, StatusCode = HttpStatusCode.OK });
         }
     }
-
-    //class ResponseModel
-    //{
-    //    public Movie Data { get; set; }
-    //    public HttpStatusCode StatusCode { get; set; }
-    //}
 }
