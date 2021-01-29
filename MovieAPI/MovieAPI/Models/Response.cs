@@ -18,8 +18,8 @@ namespace MovieAPI.Models
         [JsonProperty("description")]
         public string Description { get; set; }
 
-        //[JsonProperty("director")]
-        //public string Director { get; set; }
+        [JsonProperty("director")]
+        public string Director { get; set; }
 
         [JsonProperty("producer")]
         public string Producer { get; set; }
@@ -27,8 +27,8 @@ namespace MovieAPI.Models
         [JsonProperty("release_date")]
         public string ReleaseDate { get; set; }
 
-        //[JsonProperty("rt_score")]
-        //public string RtScore { get; set; }
+        [JsonProperty("rt_score")]
+        public string RtScore { get; set; }
 
         //[JsonProperty("people")]
         //public string People { get; set; }
