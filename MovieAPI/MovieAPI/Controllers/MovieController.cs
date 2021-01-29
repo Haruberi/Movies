@@ -17,7 +17,7 @@ namespace MovieAPI.Controllers
     public class MovieController : Controller
     {
         //cache
-        //FIXA CACHE
+        //FIXA CACHE - Memorycache
         private readonly IMemoryCache _memoryCache;
         private readonly ILogger<MovieController> _logger;
 
@@ -56,6 +56,12 @@ namespace MovieAPI.Controllers
         {
             var urlId = $"https://ghibliapi.herokuapp.com/films/{id}";
             Response responseOutput;
+            var cacheKey = $"Get_On_Location-{id}";
+
+            if (_memoryCache.TryGetValue(cacheKey, out string cachedValue))
+            {
+                return Ok(cachedValue);
+            }
             try
             {
                 using (var client = new HttpClient())
@@ -73,6 +79,8 @@ namespace MovieAPI.Controllers
             {
                 return BadRequest(ex);
             }
+
+            _memoryCache.Set(cacheKey, responseOutput);
 
             return Ok(new { Data = responseOutput, StatusCode = HttpStatusCode.OK });
         }
